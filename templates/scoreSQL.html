@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<br>
+<br>
+
+<table>
+  <tr>
+    <th>Required Information</th>
+    <th>Your Input</th>
+  </tr>
+  <tr>
+    <td>Income</td>
+    <td>{{request.form['Income']}}</td>
+  </tr>
+  <tr>
+    <td>Applied Online?</td>
+    <td>{{request.form['AppliedOnline']}}</td>
+  </tr>
+  <tr>
+    <td>Type of Residence</td>
+    <td>{{request.form['Residence']}}</td>
+  </tr>
+  <tr>
+    <td>Years at Current Residence</td>
+    <td>{{request.form['YearCurrentAddress']}}</td>
+  </tr>
+  <tr>
+    <td>Years with Current Employer</td>
+    <td>{{request.form['YearsCurrentEmployer']}}</td>
+  </tr>
+  <tr>
+    <td>Number of Credit Cards</td>
+    <td>{{request.form['NumberOfCards']}}</td>
+  </tr>
+  <tr>
+    <td>Credit Card Debt</td>
+    <td>{{request.form['CCDebt']}}</td>
+  </tr>
+  <tr>
+    <td>Number of Loans</td>
+    <td>{{request.form['Loans']}}</td>
+  </tr>
+  <tr>
+    <td>Loan Amount</td>
+    <td>{{request.form['LoanAmount']}}</td>
+  </tr>
+  <tr>
+    <td>Sale Price</td>
+    <td>{{request.form['SalePrice']}}</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>{{request.form['Location']}}</td>
+  </tr>
+</table>
+
+<br>
+<br>
+{% if response_scoring.json()["result"]["prediction"]==0.0 %}
+    <h2>This mortgage load has a higher probability to DEFAULT than not!</h2>
+    {% endif %}
+                
+{% if response_scoring.json()["result"]["prediction"]==1.0 %}
+    <h2>This mortgage loan has a higher probability to NOT DEFAULT than to default </h2>
+    {% endif %}
+
+<p>Probability of default = {{ "${:.2f}".format(response_scoring.json()["result"]["probability"]["values"][0]*100) }}%</p>
+
+<br>
+<form action="{{ url_for('saveData') }}" method="post" class = "add-entry">
+<label for = "save"><strong>Click to save prediction to database:</strong></label>
+        <input id="save" name="save" type="checkbox" value="yes" onchange= "saveDatabase()"/> <br/>
+        <br>
+  <div id = "firstlastname">
+  <dl>
+        <label for = "FirstName"<dt>Applicant First Name:</dt></label>
+        <dd>       
+              <input type = "text" name = "FirstName" id = "FirstName"><br/>
+          </dd><br>
+        <label for = "LastName"><dt>Applicant Last Name:</dt></label>
+        <dd>
+              <input type = "text" name = "LastName" id = "LastName"><br/>
+        </dd><br>
+  </dl>
+  <input type = "submit" value = "Save"/>
+  <br><br>
+  </div>
+</form>
+
+<br>
+<p><strong>Click the Mortgage Default link in the navigation bar above to make another prediction.</strong></p>
+
+
+{% endblock %}

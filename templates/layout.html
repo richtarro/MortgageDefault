@@ -1,0 +1,29 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>Mortgage Default</title>
+	<script type="text/javascript" src="static/range.js"></script>
+	<script type="text/javascript" src="static/save.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
+<div class="page">
+  <h1>Mortgage Default Prediction</h1>
+  <div class="metanav">
+  	<a class="" href="/">Mortgage Default</a>
+  </div>
+
+<center><image src="{{ url_for('static', filename='Watson.png') }}" /></center>
+
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+    </div>
+
+<footer>
+Updated May 8, 2017
+</footer>
