@@ -65,7 +65,7 @@
     <h2>This mortgage loan has a higher probability to NOT DEFAULT than to default </h2>
     {% endif %}
 
-<p>Probability of default = {{ "${:.2f}".format(response_scoring.json()["result"]["probability"]["values"][0]*100) }}%</p>
+<p>Probability of default = {{ "{:.2f}".format(response_scoring.json()["result"]["probability"]["values"][0]*100) }}%</p>
 
 <br>
 <form action="{{ url_for('saveData') }}" method="post" class = "add-entry">
